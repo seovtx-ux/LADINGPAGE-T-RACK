@@ -364,9 +364,9 @@ export default function App() {
                 <span className="flex h-2 w-2 rounded-full bg-accent-500 animate-glow-red"></span>
                 Tủ Rack Mạng Cao Cấp Nhất Phân Khúc
               </div>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight sm:leading-tight mb-4 lg:mb-6 uppercase">
-                <span className="block mb-2 xl:mb-4">TỦ RACK - TỦ SERVER</span>
-                <span className="text-gradient hover:animate-glow-red transition-all duration-300 cursor-default block">THƯƠNG HIỆU MAXTEL</span>
+              <h1 className="text-xl sm:text-3xl md:text-4xl lg:text-[1.75rem] xl:text-4xl 2xl:text-5xl font-extrabold tracking-tight text-white leading-tight sm:leading-tight mb-4 lg:mb-6 uppercase">
+                <span className="block mb-2 xl:mb-4 whitespace-nowrap">TỦ RACK - TỦ SERVER</span>
+                <span className="text-gradient hover:animate-glow-red transition-all duration-300 cursor-default block whitespace-nowrap">THƯƠNG HIỆU MAXTEL</span>
               </h1>
               <p className="text-base sm:text-lg text-white [text-shadow:_0_1px_2px_rgb(0_0_0_/_80%)] mb-6 lg:mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed px-2 lg:px-0">
                 Lựa chọn tủ mạng số 1 của các công trình công nghệ, văn phòng và Data Center. Khung thép SPCC chịu tải siêu trường siêu cường, nước sơn tĩnh điện xướt độc quyền siêu bền vững.
