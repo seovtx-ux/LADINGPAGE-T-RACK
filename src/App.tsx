@@ -601,26 +601,26 @@ export default function App() {
             <div className="md:flex-1 w-full relative">
                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-[80%] max-h-[80%] bg-brand-600/10 blur-[40px] md:blur-[80px] pointer-events-none rounded-full"></div>
               
-               <div className="glass-panel relative rounded-2xl shadow-[0_0_30px_rgba(37,166,223,0.15)] overflow-hidden border border-brand-500/30 w-full z-10 bg-white aspect-video sm:aspect-auto sm:h-[400px] group">
+               <div className="glass-panel relative rounded-2xl shadow-[0_0_30px_rgba(37,166,223,0.15)] overflow-hidden border border-brand-500/30 w-full z-10 bg-white group">
                  <AnimatePresence mode="wait">
                    {[
                      {
                        title: "Thép Cán Nguội Dày",
                        desc: "Chi tiết hình ảnh độ dày thép SPCC tiêu chuẩn quốc tế và thanh trụ cứng cáp.",
                        icon: Shield,
-                       image: "https://vienthongxanh.cdn.vccloud.vn/wp-content/uploads/2024/08/mat-truoc-tu-rack-20u-maxtel-1000x1000.jpg"
+                       image: "https://maxtel.vn/wp-content/uploads/2026/05/tu-mang-tu-rack.jpg"
                      },
                      {
                        title: "Lớp Sơn Tĩnh Điện",
                        desc: "Hệ thống trạm sơn nhà xưởng được tiêu chuẩn tĩnh điện, chống han gỉ và cách điện.",
                        icon: ShieldCheck,
-                       image: "https://vienthongxanh.cdn.vccloud.vn/wp-content/uploads/2024/08/mat-nghieng-tu-rack-15u-1000x1000.jpg"
+                       image: "https://maxtel.vn/wp-content/uploads/2026/05/Son-tinh-dien-cao-cap.jpg"
                      },
                      {
                        title: "Hiệu Suất Tản Nhiệt Tối Đa",
                        desc: "Cận cảnh hình ảnh dây cáp quang, cách khoét lưới tản nhiệt mặt lưới thông suốt.",
                        icon: Zap,
-                       image: "https://vienthongxanh.cdn.vccloud.vn/wp-content/uploads/2024/08/tu-rack-36U-maxtel-1000x1000.jpg"
+                       image: "https://maxtel.vn/wp-content/uploads/2026/05/hieu-suat-tan-nhiet-toi-da.jpg"
                      }
                    ].map((content, idx) => (
                      activeFeature === idx && (
@@ -630,11 +630,11 @@ export default function App() {
                          animate={{ opacity: 1, scale: 1 }}
                          exit={{ opacity: 0, scale: 0.95 }}
                          transition={{ duration: 0.3 }}
-                         className="flex flex-col items-center text-center w-full h-full justify-center absolute inset-0 cursor-pointer bg-white"
+                         className="cursor-pointer bg-white w-full h-full flex"
                          onClick={() => setSelectedImage(content.image)}
                        >
                          {/* Image Background */}
-                         <img src={content.image} loading="lazy" decoding="async" alt={content.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                         <img src={content.image} loading="lazy" decoding="async" alt={content.title} className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-[1.03]" />
                        </motion.div>
                      )
                    ))}
