@@ -364,8 +364,9 @@ export default function App() {
                 <span className="flex h-2 w-2 rounded-full bg-accent-500 animate-glow-red"></span>
                 Tủ Rack Mạng Cao Cấp Nhất Phân Khúc
               </div>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.2] lg:leading-[1.15] mb-4 lg:mb-6">
-                Tủ Rack - Tủ Server <span className="text-gradient hover:animate-glow-red transition-all duration-300 cursor-default block mt-1 lg:mt-2">Thương Hiệu Maxtel</span>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight sm:leading-tight mb-4 lg:mb-6 uppercase">
+                <span className="block mb-2 xl:mb-4">TỦ RACK - TỦ SERVER</span>
+                <span className="text-gradient hover:animate-glow-red transition-all duration-300 cursor-default block">THƯƠNG HIỆU MAXTEL</span>
               </h1>
               <p className="text-base sm:text-lg text-white [text-shadow:_0_1px_2px_rgb(0_0_0_/_80%)] mb-6 lg:mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed px-2 lg:px-0">
                 Lựa chọn tủ mạng số 1 của các công trình công nghệ, văn phòng và Data Center. Khung thép SPCC chịu tải siêu trường siêu cường, nước sơn tĩnh điện xướt độc quyền siêu bền vững.
@@ -409,12 +410,12 @@ export default function App() {
                 {/* Product Image */}
                 <div className="bg-white rounded-2xl overflow-hidden shadow-inner aspect-[4/3] sm:aspect-auto sm:h-[450px] relative flex md:flex-col items-center justify-center border border-brand-500/40 p-4">
                   <img 
-                    src="https://vienthongxanh.vn/wp-content/uploads/2021/04/tu-rack-15u.jpg" 
+                    src="https://maxtel.vn/wp-content/uploads/2026/05/banner-tu-rack.png" 
                     fetchPriority="high" 
                     loading="eager" 
                     alt="Banner Tủ Rack Maxtel" 
                     className="absolute inset-0 w-full h-full object-contain cursor-pointer transition-transform duration-700 hover:scale-105 p-6" 
-                    onClick={() => setSelectedImage("https://vienthongxanh.vn/wp-content/uploads/2021/04/tu-rack-15u.jpg")}
+                    onClick={() => setSelectedImage("https://maxtel.vn/wp-content/uploads/2026/05/banner-tu-rack.png")}
                   />
                   
                   {/* Overlay for zoom hint */}
@@ -607,19 +608,19 @@ export default function App() {
                        title: "Thép Cán Nguội Dày",
                        desc: "Chi tiết hình ảnh độ dày thép SPCC tiêu chuẩn quốc tế và thanh trụ cứng cáp.",
                        icon: Shield,
-                       image: "https://vienthongxanh.vn/wp-content/uploads/2021/04/tu-mang-tu-rack.jpg"
+                       image: "https://vienthongxanh.cdn.vccloud.vn/wp-content/uploads/2024/08/mat-truoc-tu-rack-20u-maxtel-1000x1000.jpg"
                      },
                      {
                        title: "Lớp Sơn Tĩnh Điện",
                        desc: "Hệ thống trạm sơn nhà xưởng được tiêu chuẩn tĩnh điện, chống han gỉ và cách điện.",
                        icon: ShieldCheck,
-                       image: "https://vienthongxanh.vn/wp-content/uploads/2021/04/tu-rack-treo-tuong.jpg"
+                       image: "https://vienthongxanh.cdn.vccloud.vn/wp-content/uploads/2024/08/mat-nghieng-tu-rack-15u-1000x1000.jpg"
                      },
                      {
                        title: "Hiệu Suất Tản Nhiệt Tối Đa",
                        desc: "Cận cảnh hình ảnh dây cáp quang, cách khoét lưới tản nhiệt mặt lưới thông suốt.",
                        icon: Zap,
-                       image: "https://vienthongxanh.vn/wp-content/uploads/2021/04/tu-rack-server-chuyen-dung.jpg"
+                       image: "https://vienthongxanh.cdn.vccloud.vn/wp-content/uploads/2024/08/tu-rack-36U-maxtel-1000x1000.jpg"
                      }
                    ].map((content, idx) => (
                      activeFeature === idx && (
@@ -930,10 +931,10 @@ export default function App() {
           
           <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              "https://vienthongxanh.vn/wp-content/uploads/2021/04/tu-rack-10u-d600.jpg",
-              "https://vienthongxanh.vn/wp-content/uploads/2021/04/tu-rack-15u.jpg",
-              "https://vienthongxanh.vn/wp-content/uploads/2021/04/tu-rack-27u.jpg",
-              "https://vienthongxanh.vn/wp-content/uploads/2021/04/tu-rack-42u.jpg"
+              "https://vienthongxanh.cdn.vccloud.vn/wp-content/uploads/2024/08/tu-rack-12u-d600-dang-dung-mau-den-1000x1000.jpg",
+              "https://vienthongxanh.cdn.vccloud.vn/wp-content/uploads/2024/08/mat-truoc-Tu-rack-15U-Maxtel-1-1000x1000.jpg",
+              "https://vienthongxanh.cdn.vccloud.vn/wp-content/uploads/2024/08/tu-rack-27u-maxtel-1000x1000.jpg",
+              "https://vienthongxanh.cdn.vccloud.vn/wp-content/uploads/2024/08/tu-rack-42u-mau-den-maxtel-1000x1000.jpg"
             ].map((img, i) => (
                <div 
                  key={i} 
@@ -1044,7 +1045,7 @@ export default function App() {
           <div className="md:col-span-1">
             <h4 className="text-white font-bold mb-4 uppercase tracking-wider text-xs">Cam kết dịch vụ & Chính Sách</h4>
             <ul className="space-y-4 md:space-y-3">
-              <li><a href="#" className="inline-block py-1 hover:text-brand-400 text-slate-300 transition-colors">Bảo hành tủ lên đến 12 năm chính hiệu</a></li>
+              <li><a href="#" className="inline-block py-1 hover:text-brand-400 text-slate-300 transition-colors">Bảo hành tủ lên tới 3 năm</a></li>
               <li><a href="#" className="inline-block py-1 hover:text-brand-400 text-slate-300 transition-colors">Lộ trình và Cước phí Vận Chuyển</a></li>
               <li><a href="#" className="inline-block py-1 hover:text-brand-400 text-slate-300 transition-colors">Thiết kế Tủ Rack theo quy mô tùy biến</a></li>
               <li><a href="#" className="inline-block py-1 hover:text-brand-400 text-slate-300 transition-colors">Đăng ký làm Đại lý toàn quốc</a></li>
