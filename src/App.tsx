@@ -408,13 +408,13 @@ export default function App() {
                   <Star className="w-3 h-3 sm:w-4 sm:h-4 fill-current pt-0.5" /> 4.9/5 Excellent Quality
                 </div>
                 {/* Product Image */}
-                <div className="bg-white rounded-2xl overflow-hidden shadow-inner aspect-[4/3] sm:aspect-auto sm:h-[450px] relative flex md:flex-col items-center justify-center border border-brand-500/40 p-4">
+                <div className="bg-white rounded-2xl overflow-hidden shadow-inner aspect-[4/3] sm:aspect-auto sm:h-[450px] relative flex md:flex-col items-center justify-center border border-brand-500/40">
                   <img 
                     src="https://maxtel.vn/wp-content/uploads/2026/05/banner-tu-rack.png" 
                     fetchPriority="high" 
                     loading="eager" 
                     alt="Banner Tủ Rack Maxtel" 
-                    className="absolute inset-0 w-full h-full object-contain cursor-pointer transition-transform duration-700 hover:scale-105 p-6" 
+                    className="absolute inset-0 w-full h-full object-cover cursor-pointer transition-transform duration-700 hover:scale-105" 
                     onClick={() => setSelectedImage("https://maxtel.vn/wp-content/uploads/2026/05/banner-tu-rack.png")}
                   />
                   
@@ -461,7 +461,7 @@ export default function App() {
             ))}
           </div>
 
-          <motion.div layout className="flex overflow-x-auto md:grid md:grid-cols-2 lg:grid-cols-4 snap-x snap-mandatory gap-4 md:gap-6 px-4 md:px-0 pb-8 -mx-4 md:mx-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+          <motion.div layout className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 pb-8">
             <AnimatePresence>
               {filteredProducts.map((prod) => (
                 <motion.div 
@@ -471,7 +471,7 @@ export default function App() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
                   transition={{ duration: 0.3 }}
-                  className="glass-panel rounded-2xl overflow-hidden shadow-[0_0_20px_rgba(37,166,223,0.15)] border border-brand-500/30 flex flex-col group cursor-pointer flex-none w-[80vw] sm:w-[340px] md:w-auto md:flex-1 snap-center"
+                  className="glass-panel rounded-2xl overflow-hidden shadow-[0_0_20px_rgba(37,166,223,0.15)] border border-brand-500/30 flex flex-col group cursor-pointer"
                   onClick={scrollToContact}
                 >
                   <div className="aspect-square relative overflow-hidden bg-white rounded-t-2xl p-4 flex items-center justify-center">
@@ -480,18 +480,12 @@ export default function App() {
                       <span className="bg-[#0f172a]/90 text-white text-xs font-bold px-2 py-1.5 rounded-lg border border-brand-500 shadow-sm">{prod.cap}</span>
                     </div>
                   </div>
-                  <div className="p-5 flex-1 flex flex-col border-t border-brand-500/10">
-                    <h3 className="text-lg font-bold text-white mb-2 line-clamp-2 group-hover:text-brand-500 transition-colors uppercase leading-snug">{prod.title}</h3>
-                    <p className="text-sm text-slate-300 line-clamp-2 mb-4 leading-relaxed">{prod.desc}</p>
+                  <div className="p-3 sm:p-5 flex-1 flex flex-col border-t border-brand-500/10">
+                    <h3 className="text-sm sm:text-lg font-bold text-white mb-1.5 sm:mb-2 line-clamp-2 group-hover:text-brand-500 transition-colors uppercase leading-snug">{prod.title}</h3>
+                    <p className="text-xs sm:text-sm text-slate-300 line-clamp-2 mb-3 sm:mb-4 leading-relaxed">{prod.desc}</p>
                     
-                    <div className="flex flex-wrap gap-1 mb-4 mt-auto">
-                      {prod.tags.map(tag => (
-                        <span key={tag} className="text-[10px] font-medium text-slate-300 bg-black/40 px-2 py-1 rounded">#{tag}</span>
-                      ))}
-                    </div>
-
-                    <div className="flex items-center justify-center pt-2 gap-2 border-t border-brand-500/20">
-                      <button className="w-full text-brand-400 bg-brand-900/40 border border-brand-500/30 group-hover:bg-brand-600 group-hover:text-white group-hover:border-transparent px-3 py-2.5 text-sm font-bold rounded-lg transition-colors shadow-sm whitespace-nowrap">
+                    <div className="flex items-center justify-center pt-3 sm:pt-4 gap-2 border-t border-brand-500/20 mt-auto">
+                      <button className="w-full text-brand-400 bg-brand-900/40 border border-brand-500/30 group-hover:bg-brand-600 group-hover:text-white group-hover:border-transparent px-2 sm:px-3 py-2 sm:py-2.5 text-[10px] sm:text-sm font-bold rounded-lg transition-colors shadow-sm whitespace-nowrap">
                         TẢI BÁO GIÁ ĐẠI LÝ
                       </button>
                     </div>
