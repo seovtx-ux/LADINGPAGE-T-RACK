@@ -1039,7 +1039,7 @@ export default function App() {
       <section id="contact-section" className="py-12 md:py-24 relative">
         <div className="max-w-4xl mx-auto px-4">
           <div className="bg-[#0f172a]  rounded-3xl shadow-[0_0_20px_rgba(37,166,223,0.4)] overflow-hidden flex flex-col md:flex-row relative">
-            <div className="md:w-5/12 bg-slate-800/80 backdrop-blur-md p-8 sm:p-10 text-white flex flex-col justify-between border-r border-slate-700/50">
+            <div className="hidden md:flex md:w-5/12 bg-slate-800/80 backdrop-blur-md p-8 sm:p-10 text-white flex-col justify-between border-r border-slate-700/50">
               <div>
                 <h3 className="text-xl sm:text-2xl font-bold mb-2 text-white">BÁO GIÁ ĐẠI LÝ LÊN TỚI 40%!</h3>
                 <p className="text-slate-300 text-xs sm:text-sm mb-6">Xin hãy để lại thông tin để chúng tôi liên hệ tư vấn dòng Tủ Rack phù hợp và gởi bảng báo giá VIP cho doanh nghiệp.</p>
