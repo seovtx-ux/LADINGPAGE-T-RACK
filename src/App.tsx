@@ -436,9 +436,6 @@ export default function App() {
               className="relative lg:ml-10 hidden lg:block"
             >
               <div className="rounded-3xl p-1.5 sm:p-2 bg-gradient-to-tr from-brand-100 to-white shadow-2xl relative">
-                <div className="absolute top-4 right-4 bg-[#0f172a]  px-3 sm:px-4 py-1.5 sm:py-2 rounded-full font-bold text-accent-600 text-xs sm:text-sm shadow-sm z-20 flex items-center gap-1">
-                  <Star className="w-3 h-3 sm:w-4 sm:h-4 fill-current pt-0.5" /> 4.9/5 Excellent Quality
-                </div>
                 {/* Product Image */}
                 <div className="bg-white rounded-2xl overflow-hidden shadow-inner aspect-[4/3] sm:aspect-auto sm:h-[450px] relative flex md:flex-col items-center justify-center border border-brand-500/40">
                   <img 
@@ -716,10 +713,10 @@ export default function App() {
             <p className="mt-4 text-lg text-white [text-shadow:_0_1px_2px_rgb(0_0_0_/_80%)]">Bảng thông số kỹ thuật chuẩn EIA-310-D giúp kỹ sư dự toán mạng thiết kế dễ dàng.</p>
           </div>
 
-          <div className="flex flex-col md:flex-row gap-8 lg:gap-12 max-w-5xl mx-auto">
+          <div className="flex flex-col md:flex-row gap-6 md:gap-8 lg:gap-12 max-w-5xl mx-auto">
             {/* Sidebar / Tabs */}
             <div 
-              className="flex flex-row overflow-x-auto md:flex-col gap-2 sm:gap-3 md:w-56 lg:w-72 pb-4 md:pb-0 flex-shrink-0"
+              className="flex flex-row overflow-x-auto snap-x snap-mandatory md:flex-col gap-3 md:gap-3 md:w-56 lg:w-72 pb-4 md:pb-0 flex-shrink-0 -mx-4 px-4 md:mx-0 md:px-0"
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
                {[
@@ -731,7 +728,7 @@ export default function App() {
                 <button
                   key={filter.id}
                   onClick={() => setActiveSpecFilter(filter.id)}
-                  className={`px-5 py-3.5 md:py-4 md:px-6 rounded-xl text-sm font-semibold transition-all text-left whitespace-nowrap md:whitespace-normal border flex items-center gap-3 relative min-h-[48px] ${
+                  className={`snap-center flex-shrink-0 px-5 py-3 md:py-4 md:px-6 rounded-xl text-sm font-semibold transition-all text-left whitespace-nowrap md:whitespace-normal border flex items-center gap-3 relative min-h-[48px] ${
                     activeSpecFilter === filter.id 
                       ? 'bg-brand-600 text-white border-brand-400 shadow-[0_0_20px_rgba(37,166,223,0.3)] shadow-brand-500/20' 
                       : 'bg-[#0f172a] text-white [text-shadow:_0_1px_2px_rgb(0_0_0_/_80%)] border-brand-500/30 hover:bg-slate-800 hover:border-brand-500/60'
@@ -766,10 +763,10 @@ export default function App() {
                        >
                          {specificationsData[activeSpecFilter].map((spec, index) => (
                            <div key={index} className="flex flex-col md:grid md:grid-cols-5 border-b last:border-b-0 border-brand-500/20 hover:bg-brand-900/20 transition-all duration-300 group">
-                             <div className="py-3 px-4 md:px-6 md:py-4 text-sm font-semibold text-brand-50 bg-black/20 md:border-r border-brand-500/20 col-span-2 group-hover:text-brand-400 transition-colors flex items-center">
+                             <div className="pt-4 pb-1 px-4 md:px-6 md:py-4 text-xs md:text-sm font-bold md:font-semibold text-brand-400 md:text-brand-50 bg-black/10 md:bg-black/20 md:border-r border-brand-500/20 col-span-2 md:group-hover:text-brand-400 transition-colors flex items-center uppercase md:normal-case tracking-wider md:tracking-normal w-full">
                                {spec.param}
                              </div>
-                             <div className="py-3 px-4 md:px-6 md:py-4 text-sm text-slate-100 col-span-3 leading-relaxed flex items-center">
+                             <div className="pb-4 pt-1.5 px-4 md:px-6 md:py-4 text-base md:text-sm text-white md:text-slate-100 col-span-3 leading-relaxed flex items-center font-medium md:font-normal">
                                {spec.value}
                              </div>
                            </div>
