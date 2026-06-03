@@ -8,6 +8,11 @@ import { motion, AnimatePresence } from 'motion/react';
 import { ShieldCheck, Zap, Server, Wrench, CheckCircle2, Phone, Mail, ChevronRight, Star, Clock, ArrowRight, Menu, X, Check, Box, CloudLightning, Layers, Award, Shield } from 'lucide-react';
 import { NetworkBackground } from './components/NetworkBackground';
 
+const swipeConfidenceThreshold = 10000;
+const swipePower = (offset: number, velocity: number) => {
+  return Math.abs(offset) * velocity;
+};
+
 export default function App() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -81,6 +86,13 @@ export default function App() {
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveFeature((prev) => (prev + 1) % 3);
+    }, 4000);
+    return () => clearInterval(interval);
   }, []);
 
   const products = [
@@ -360,11 +372,11 @@ export default function App() {
               transition={{ duration: 0.6 }}
               className="text-center lg:text-left bg-[#020617]/60 backdrop-blur-md p-6 sm:p-8 lg:p-10 rounded-[2rem] border border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.3)]"
             >
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-900/40 border border-brand-100 text-brand-500 font-medium text-sm mb-6">
-                <span className="flex h-2 w-2 rounded-full bg-accent-500 animate-glow-red"></span>
+              <div className="inline-flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full bg-brand-900/40 border border-brand-100 text-brand-500 font-medium text-[10px] sm:text-sm mb-4 sm:mb-6">
+                <span className="flex h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-accent-500 animate-glow-red"></span>
                 Tủ Rack Mạng Cao Cấp Nhất Phân Khúc
               </div>
-              <h1 className="text-xl sm:text-3xl md:text-4xl lg:text-[1.75rem] xl:text-4xl 2xl:text-5xl font-extrabold tracking-tight text-white leading-tight sm:leading-tight mb-4 lg:mb-6 uppercase">
+              <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-[1.75rem] xl:text-4xl 2xl:text-5xl font-extrabold tracking-tight text-white leading-tight sm:leading-tight mb-4 lg:mb-6 uppercase">
                 <span className="block mb-2 xl:mb-4 whitespace-nowrap">TỦ RACK - TỦ SERVER</span>
                 <span className="text-gradient hover:animate-glow-red transition-all duration-300 cursor-default block whitespace-nowrap">THƯƠNG HIỆU MAXTEL</span>
               </h1>
@@ -372,6 +384,27 @@ export default function App() {
                 Lựa chọn tủ mạng số 1 của các công trình công nghệ, văn phòng và Data Center. Khung thép SPCC chịu tải siêu trường siêu cường, nước sơn tĩnh điện xướt độc quyền siêu bền vững.
               </p>
               
+              <div className="block lg:hidden w-full mb-8 relative">
+                <div className="rounded-3xl p-1.5 sm:p-2 bg-gradient-to-tr from-brand-100 to-white shadow-2xl relative">
+                  <div className="absolute top-4 right-4 bg-[#0f172a] px-3 py-1.5 rounded-full font-bold text-accent-600 text-xs shadow-sm z-20 flex items-center gap-1">
+                    <Star className="w-3 h-3 fill-current pt-0.5" /> 4.9/5
+                  </div>
+                  <div className="bg-white rounded-2xl overflow-hidden shadow-inner aspect-[4/3] relative flex items-center justify-center border border-brand-500/40">
+                    <img 
+                      src="https://maxtel.vn/wp-content/uploads/2026/05/banner-tu-rack.png" 
+                      fetchPriority="high" 
+                      loading="eager" 
+                      alt="Banner Tủ Rack Maxtel" 
+                      className="absolute inset-0 w-full h-full object-cover cursor-pointer transition-transform duration-700 hover:scale-105" 
+                      onClick={() => setSelectedImage("https://maxtel.vn/wp-content/uploads/2026/05/banner-tu-rack.png")}
+                    />
+                    <div className="absolute inset-0 bg-brand-900/40 opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none flex items-center justify-center">
+                      <span className="text-white font-medium text-sm border border-white/30 px-3 py-1.5 rounded-full bg-black/50 backdrop-blur-sm">Phóng to</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 px-4 sm:px-0">
                 <button 
                   onClick={scrollToContact}
@@ -401,7 +434,7 @@ export default function App() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative lg:ml-10"
+              className="relative lg:ml-10 hidden lg:block"
             >
               <div className="rounded-3xl p-1.5 sm:p-2 bg-gradient-to-tr from-brand-100 to-white shadow-2xl relative">
                 <div className="absolute top-4 right-4 bg-[#0f172a]  px-3 sm:px-4 py-1.5 sm:py-2 rounded-full font-bold text-accent-600 text-xs sm:text-sm shadow-sm z-20 flex items-center gap-1">
@@ -440,7 +473,7 @@ export default function App() {
             <p className="mt-4 text-lg text-white [text-shadow:_0_1px_2px_rgb(0_0_0_/_80%)]">Sản xuất đầy đủ mẫu mã tủ rack công nghiệp, tủ rack văn phòng, treo tường theo đơn đặt hàng dự án.</p>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 sm:mb-12">
+          <div className="flex overflow-x-auto sm:flex-wrap sm:justify-center gap-2 sm:gap-3 mb-8 sm:mb-12 pb-2 sm:pb-0" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             {[
               { id: 'rack', name: 'Tủ Đứng (Floor Standing)' },
               { id: 'wall', name: 'Treo Tường (Wall mount)' },
@@ -450,7 +483,7 @@ export default function App() {
               <button
                 key={filter.id}
                 onClick={() => setActiveFilter(filter.id)}
-                className={`px-5 py-3 sm:py-2.5 rounded-full text-sm font-semibold transition-all min-h-[44px] ${
+                className={`flex-shrink-0 whitespace-nowrap px-5 py-3 sm:py-2.5 rounded-full text-sm font-semibold transition-all min-h-[44px] ${
                   activeFilter === filter.id 
                     ? 'bg-brand-600 text-white shadow-[0_0_10px_rgba(37,166,223,0.2)] shadow-brand-500/20 scale-105' 
                     : 'bg-[#0f172a] text-white [text-shadow:_0_1px_2px_rgb(0_0_0_/_80%)] hover:bg-slate-800 border border-brand-500/30'
@@ -481,8 +514,8 @@ export default function App() {
                     </div>
                   </div>
                   <div className="p-3 sm:p-5 flex-1 flex flex-col border-t border-brand-500/10">
-                    <h3 className="text-sm sm:text-lg font-bold text-white mb-1.5 sm:mb-2 line-clamp-2 group-hover:text-brand-500 transition-colors uppercase leading-snug">{prod.title}</h3>
-                    <p className="text-xs sm:text-sm text-slate-300 line-clamp-2 mb-3 sm:mb-4 leading-relaxed">{prod.desc}</p>
+                    <h3 className="text-xs sm:text-lg font-bold text-white mb-1.5 sm:mb-2 line-clamp-3 sm:line-clamp-2 group-hover:text-brand-500 transition-colors uppercase leading-snug">{prod.title}</h3>
+                    <p className="hidden sm:block text-sm text-slate-300 line-clamp-2 mb-4 leading-relaxed">{prod.desc}</p>
                     
                     <div className="flex items-center justify-center pt-3 sm:pt-4 gap-2 border-t border-brand-500/20 mt-auto">
                       <button className="w-full text-brand-400 bg-brand-900/40 border border-brand-500/30 group-hover:bg-brand-600 group-hover:text-white group-hover:border-transparent px-2 sm:px-3 py-2 sm:py-2.5 text-[10px] sm:text-sm font-bold rounded-lg transition-colors shadow-sm whitespace-nowrap">
@@ -551,7 +584,7 @@ export default function App() {
           <div className="flex flex-col md:flex-row gap-8 lg:gap-12 max-w-6xl mx-auto">
             {/* Sidebar / Tabs */}
             <div 
-              className="flex flex-row overflow-x-auto md:flex-col gap-2 sm:gap-3 md:w-64 lg:w-80 pb-4 md:pb-0 flex-shrink-0"
+              className="hidden md:flex flex-row overflow-x-auto md:flex-col gap-2 sm:gap-3 md:w-64 lg:w-80 pb-4 md:pb-0 flex-shrink-0"
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
               {[
@@ -592,43 +625,53 @@ export default function App() {
             </div>
 
             {/* Feature Content Showcase */}
-            <div className="md:flex-1 w-full relative">
+            <div className="md:flex-1 w-full relative flex">
                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-[80%] max-h-[80%] bg-brand-600/10 blur-[40px] md:blur-[80px] pointer-events-none rounded-full"></div>
               
-               <div className="glass-panel relative rounded-2xl shadow-[0_0_30px_rgba(37,166,223,0.15)] overflow-hidden border border-brand-500/30 w-full z-10 bg-white group">
-                 <AnimatePresence mode="wait">
+               <div className="glass-panel relative rounded-2xl shadow-[0_0_30px_rgba(37,166,223,0.15)] overflow-hidden border border-brand-500/30 w-full aspect-[3/2] md:aspect-auto md:h-full flex z-10 bg-white group">
+                 <AnimatePresence initial={false}>
                    {[
                      {
                        title: "Thép Cán Nguội Dày",
                        desc: "Chi tiết hình ảnh độ dày thép SPCC tiêu chuẩn quốc tế và thanh trụ cứng cáp.",
                        icon: Shield,
-                       image: "https://maxtel.vn/wp-content/uploads/2026/05/tu-mang-tu-rack.jpg"
+                       image: "https://maxtel.vn/wp-content/uploads/2026/06/chat-lieu.png"
                      },
                      {
                        title: "Lớp Sơn Tĩnh Điện",
                        desc: "Hệ thống trạm sơn nhà xưởng được tiêu chuẩn tĩnh điện, chống han gỉ và cách điện.",
                        icon: ShieldCheck,
-                       image: "https://maxtel.vn/wp-content/uploads/2026/05/Son-tinh-dien-cao-cap.jpg"
+                       image: "https://maxtel.vn/wp-content/uploads/2026/06/lop-son-tinh-dien.png"
                      },
                      {
                        title: "Hiệu Suất Tản Nhiệt Tối Đa",
                        desc: "Cận cảnh hình ảnh dây cáp quang, cách khoét lưới tản nhiệt mặt lưới thông suốt.",
                        icon: Zap,
-                       image: "https://maxtel.vn/wp-content/uploads/2026/05/hieu-suat-tan-nhiet-toi-da.jpg"
+                       image: "https://maxtel.vn/wp-content/uploads/2026/06/hieu-suat-tan-nhiet-toi-da.png"
                      }
                    ].map((content, idx) => (
                      activeFeature === idx && (
                        <motion.div
                          key={idx}
-                         initial={{ opacity: 0, scale: 0.95 }}
-                         animate={{ opacity: 1, scale: 1 }}
-                         exit={{ opacity: 0, scale: 0.95 }}
-                         transition={{ duration: 0.3 }}
-                         className="cursor-pointer bg-white w-full h-full flex"
+                         initial={{ opacity: 0, x: 100 }}
+                         animate={{ opacity: 1, x: 0 }}
+                         exit={{ opacity: 0, x: -100 }}
+                         transition={{ type: "spring", stiffness: 200, damping: 25 }}
+                         className="cursor-pointer bg-white w-full h-full flex justify-center items-center absolute inset-0"
                          onClick={() => setSelectedImage(content.image)}
+                         drag="x"
+                         dragConstraints={{ left: 0, right: 0 }}
+                         onDragEnd={(e, { offset, velocity }) => {
+                           const swipe = swipePower(offset.x, velocity.x);
+                           if (swipe < -swipeConfidenceThreshold) {
+                             setActiveFeature((prev) => (prev + 1) % 3);
+                           } else if (swipe > swipeConfidenceThreshold) {
+                             setActiveFeature((prev) => (prev - 1 + 3) % 3);
+                           }
+                         }}
                        >
                          {/* Image Background */}
-                         <img src={content.image} loading="lazy" decoding="async" alt={content.title} className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-[1.03]" />
+                         <img src={content.image} loading="lazy" decoding="async" alt={content.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03] pointer-events-none" />
                        </motion.div>
                      )
                    ))}
@@ -754,7 +797,10 @@ export default function App() {
           </div>
 
           {/* Mobile Layout */}
-          <div className="md:hidden space-y-4 pb-4">
+          <div 
+            className="md:hidden flex overflow-x-auto gap-4 pb-6 snap-x snap-mandatory px-4 -mx-4"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          >
             {[
               { 
                 feature: "Độ dày thép trụ (U)", 
@@ -782,12 +828,12 @@ export default function App() {
                 maxtel: "Lót góc xốp cứng, đóng thùng carton dập logo tiêu chuẩn quy cách xuất khẩu." 
               }
             ].map((row, index) => (
-              <div key={index} className="bg-[#0f172a] rounded-2xl border border-brand-500/20 overflow-hidden shadow-lg relative pb-1">
+              <div key={index} className="flex-shrink-0 w-[85vw] sm:w-[60vw] snap-center bg-[#0f172a] rounded-2xl border border-brand-500/20 overflow-hidden shadow-lg relative pb-1 flex flex-col">
                 <div className="absolute top-0 w-full h-[2px] bg-gradient-to-r from-brand-500/50 to-accent-500/50 left-0"></div>
                 <div className="bg-slate-800/80 p-3 border-b border-brand-500/30 text-center">
                   <h3 className="text-base font-bold text-white">{row.feature}</h3>
                 </div>
-                <div className="grid grid-cols-2 divide-x divide-brand-500/10">
+                <div className="grid grid-cols-2 divide-x divide-brand-500/10 flex-grow">
                    <div className="p-4 flex flex-col items-center text-center gap-2 bg-slate-900/50">
                      <span className="text-[10px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wider">Tủ giá rẻ</span>
                      <X className="w-5 h-5 sm:w-6 sm:h-6 text-red-500 opacity-60" />
@@ -882,49 +928,92 @@ export default function App() {
             <p className="text-white [text-shadow:_0_1px_2px_rgb(0_0_0_/_80%)] text-lg">Hàng triệu doanh nghiệp đã nâng cấp hạ tầng viễn thông bằng tủ Rack Maxtel.</p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              { 
-                name: "Anh Hoàng Quang", 
-                role: "IT Manager - VietBank", 
-                img: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=150&q=80",
-                text: "Là ngân hàng nên chúng tôi đặc biệt yêu cầu khắt khe thiết bị phòng phòng Data Center. Tủ Rack Maxtel 42U đáp ứng hoàn toàn mọi tiêu chuẩn khắt khe về độ ổn định, cửa đột lỗ tản nhiệt cực tốt." 
-              },
-              { 
-                name: "Kỹ sư Huỳnh Sang", 
-                role: "Chỉ Huy Phục Vụ Dự Án BĐS", 
-                img: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=150&q=80",
-                text: "Tôi lắp đặt hàng loạt tủ mạng treo tường 12U và thiết bị quang phân khối vào các tòa nhà The Pride. Mọi thứ từ hộp đóng thùng cho đến con ốc vít của hãng Maxtel rất được chăm chút kỹ càng." 
-              },
-              { 
-                name: "Chị Thu Hoa", 
-                role: "Đại Lý Thiết Bị Viễn Thông", 
-                img: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&q=80",
-                text: "Cửa hàng tôi bây giờ chỉ phân phối tủ mạng tủ rack hãng Maxtel vì bảo hành 12 tháng tại nhà, chớp nhoáng phục vụ tận nơi. Khách sỉ toàn mua theo lốc cực kỳ tin tưởng." 
-              },
-            ].map((t, i) => (
-              <div key={i} className="bg-[#0f172a]/80 backdrop-blur-sm p-8 rounded-3xl border border-brand-500/20 flex flex-col shadow-[0_0_20px_rgba(37,166,223,0.1)] hover:border-brand-500/40 transition-colors">
-                <div className="flex text-yellow-400 mb-6 gap-1">
-                  {[1,2,3,4,5].map(s => <Star key={s} className="w-5 h-5 fill-current" />)}
-                </div>
-                <p className="text-slate-200 text-base leading-relaxed mb-8 flex-1 italic relative">
-                  <span className="text-4xl absolute -top-4 -left-2 text-brand-500/30 font-serif">"</span>
-                  {t.text}
-                  <span className="text-4xl absolute -bottom-6 right-0 text-brand-500/30 font-serif">"</span>
-                </p>
-                <div className="flex items-center gap-4 mt-auto pt-4 border-t border-slate-700/50">
-                  <img src={t.img} loading="lazy" decoding="async" alt={t.name} className="w-12 h-12 rounded-full border-2 border-brand-500 object-cover" />
-                  <div>
-                    <div className="font-bold text-lg text-white">{t.name}</div>
-                    <div className="text-sm text-brand-400">{t.role}</div>
+          <div className="relative overflow-hidden -mx-4 sm:mx-0 group">
+            {/* Optional gradient edges for smooth fading effect */}
+            <div className="absolute top-0 left-0 w-8 sm:w-16 h-full bg-gradient-to-r from-[#050b14] to-transparent z-10 pointer-events-none lg:w-32 lg:from-[#050b14]/80"></div>
+            <div className="absolute top-0 right-0 w-8 sm:w-16 h-full bg-gradient-to-l from-[#050b14] to-transparent z-10 pointer-events-none lg:w-32 lg:from-[#050b14]/80"></div>
+            
+            <motion.div 
+              className="flex gap-6 sm:gap-8 w-max px-4 sm:px-0"
+              animate={{ x: ["0%", "-50%"] }}
+              transition={{ ease: "linear", duration: 30, repeat: Infinity }}
+            >
+              {[
+                { 
+                  name: "Anh Hoàng Quang", 
+                  role: "IT Manager - VietBank", 
+                  img: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=150&q=80",
+                  text: "Là ngân hàng nên chúng tôi đặc biệt yêu cầu khắt khe thiết bị phòng phòng Data Center. Tủ Rack Maxtel 42U đáp ứng hoàn toàn mọi tiêu chuẩn khắt khe về độ ổn định, cửa đột lỗ tản nhiệt cực tốt." 
+                },
+                { 
+                  name: "Kỹ sư Huỳnh Sang", 
+                  role: "Chỉ Huy Phục Vụ Dự Án BĐS", 
+                  img: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=150&q=80",
+                  text: "Tôi lắp đặt hàng loạt tủ mạng treo tường 12U và thiết bị quang phân khối vào các tòa nhà The Pride. Mọi thứ từ hộp đóng thùng cho đến con ốc vít của hãng Maxtel rất được chăm chút kỹ càng." 
+                },
+                { 
+                  name: "Chị Thu Hoa", 
+                  role: "Đại Lý Thiết Bị Viễn Thông", 
+                  img: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&q=80",
+                  text: "Cửa hàng tôi bây giờ chỉ phân phối tủ mạng tủ rack hãng Maxtel vì bảo hành 12 tháng tại nhà, chớp nhoáng phục vụ tận nơi. Khách sỉ toàn mua theo lốc cực kỳ tin tưởng." 
+                },
+                // Duplicate for seamless infinite scroll loop
+                { 
+                  name: "Anh Hoàng Quang", 
+                  role: "IT Manager - VietBank", 
+                  img: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=150&q=80",
+                  text: "Là ngân hàng nên chúng tôi đặc biệt yêu cầu khắt khe thiết bị phòng phòng Data Center. Tủ Rack Maxtel 42U đáp ứng hoàn toàn mọi tiêu chuẩn khắt khe về độ ổn định, cửa đột lỗ tản nhiệt cực tốt." 
+                },
+                { 
+                  name: "Kỹ sư Huỳnh Sang", 
+                  role: "Chỉ Huy Phục Vụ Dự Án BĐS", 
+                  img: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=150&q=80",
+                  text: "Tôi lắp đặt hàng loạt tủ mạng treo tường 12U và thiết bị quang phân khối vào các tòa nhà The Pride. Mọi thứ từ hộp đóng thùng cho đến con ốc vít của hãng Maxtel rất được chăm chút kỹ càng." 
+                },
+                { 
+                  name: "Chị Thu Hoa", 
+                  role: "Đại Lý Thiết Bị Viễn Thông", 
+                  img: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&q=80",
+                  text: "Cửa hàng tôi bây giờ chỉ phân phối tủ mạng tủ rack hãng Maxtel vì bảo hành 12 tháng tại nhà, chớp nhoáng phục vụ tận nơi. Khách sỉ toàn mua theo lốc cực kỳ tin tưởng." 
+                },
+              ].map((t, i) => (
+                <div key={i} className="flex-shrink-0 w-[85vw] sm:w-[400px] bg-[#0f172a]/80 backdrop-blur-sm p-8 rounded-3xl border border-brand-500/20 flex flex-col shadow-[0_0_20px_rgba(37,166,223,0.1)] hover:border-brand-500/40 transition-colors">
+                  <div className="flex text-yellow-400 mb-6 gap-1">
+                    {[1,2,3,4,5].map(s => <Star key={s} className="w-5 h-5 fill-current" />)}
+                  </div>
+                  <p className="text-slate-200 text-base leading-relaxed mb-8 flex-1 italic relative">
+                    <span className="text-4xl absolute -top-4 -left-2 text-brand-500/30 font-serif">"</span>
+                    {t.text}
+                    <span className="text-4xl absolute -bottom-6 right-0 text-brand-500/30 font-serif">"</span>
+                  </p>
+                  <div className="flex items-center gap-4 mt-auto pt-4 border-t border-slate-700/50">
+                    <img src={t.img} loading="lazy" decoding="async" alt={t.name} className="w-12 h-12 rounded-full border-2 border-brand-500 object-cover" />
+                    <div>
+                      <div className="font-bold text-lg text-white">{t.name}</div>
+                      <div className="text-sm text-brand-400">{t.role}</div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </motion.div>
           </div>
           
-          <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="mt-20 relative overflow-hidden -mx-4 sm:mx-0 group">
+            {/* Optional gradient edges for smooth fading effect */}
+            <div className="absolute top-0 left-0 w-8 sm:w-16 h-full bg-gradient-to-r from-[#050b14] to-transparent z-10 pointer-events-none lg:w-32 lg:from-[#0f172a]/80"></div>
+            <div className="absolute top-0 right-0 w-8 sm:w-16 h-full bg-gradient-to-l from-[#050b14] to-transparent z-10 pointer-events-none lg:w-32 lg:from-[#0f172a]/80"></div>
+            
+            <motion.div 
+              className="flex gap-4 w-max px-4 sm:px-0"
+              animate={{ x: ["0%", "-50%"] }}
+              transition={{ ease: "linear", duration: 30, repeat: Infinity }}
+            >
             {[
+              "https://vienthongxanh.cdn.vccloud.vn/wp-content/uploads/2024/08/tu-rack-12u-d600-dang-dung-mau-den-1000x1000.jpg",
+              "https://vienthongxanh.cdn.vccloud.vn/wp-content/uploads/2024/08/mat-truoc-Tu-rack-15U-Maxtel-1-1000x1000.jpg",
+              "https://vienthongxanh.cdn.vccloud.vn/wp-content/uploads/2024/08/tu-rack-27u-maxtel-1000x1000.jpg",
+              "https://vienthongxanh.cdn.vccloud.vn/wp-content/uploads/2024/08/tu-rack-42u-mau-den-maxtel-1000x1000.jpg",
+              // Duplicate to create infinite loop
               "https://vienthongxanh.cdn.vccloud.vn/wp-content/uploads/2024/08/tu-rack-12u-d600-dang-dung-mau-den-1000x1000.jpg",
               "https://vienthongxanh.cdn.vccloud.vn/wp-content/uploads/2024/08/mat-truoc-Tu-rack-15U-Maxtel-1-1000x1000.jpg",
               "https://vienthongxanh.cdn.vccloud.vn/wp-content/uploads/2024/08/tu-rack-27u-maxtel-1000x1000.jpg",
@@ -932,7 +1021,7 @@ export default function App() {
             ].map((img, i) => (
                <div 
                  key={i} 
-                 className="h-32 sm:h-48 rounded-xl overflow-hidden relative group cursor-pointer border border-brand-500/20 p-2 bg-white"
+                 className="flex-shrink-0 w-40 sm:w-56 h-32 sm:h-48 rounded-xl overflow-hidden relative group cursor-pointer border border-brand-500/20 p-2 bg-white"
                  onClick={() => setSelectedImage(img)}
                >
                  <img src={img} loading="lazy" decoding="async" alt="Hình ảnh tủ mạng chụp tại kho thật" className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-700" />
@@ -941,6 +1030,7 @@ export default function App() {
                  </div>
                </div>
             ))}
+            </motion.div>
           </div>
         </div>
       </section>
