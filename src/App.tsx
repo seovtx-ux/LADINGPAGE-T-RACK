@@ -18,7 +18,9 @@ export default function App() {
   const [showModal, setShowModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeFilter, setActiveFilter] = useState('rack');
+  const [activeFilter, setActiveFilter] = useState('all');
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 8;
   const [activeSpecFilter, setActiveSpecFilter] = useState('rack');
   const [activeFeature, setActiveFeature] = useState(0);
 
@@ -287,7 +289,15 @@ export default function App() {
     }
   ];
 
-  const filteredProducts = products.filter(p => p.category === activeFilter);
+  const filteredProducts = activeFilter === 'all' 
+    ? products 
+    : products.filter(p => p.category === activeFilter);
+    
+  const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+  const paginatedProducts = filteredProducts.slice(
+    (currentPage - 1) * productsPerPage,
+    currentPage * productsPerPage
+  );
 
   const scrollToContact = () => {
     document.getElementById('contact-section')?.scrollIntoView({ behavior: 'smooth' });
@@ -378,9 +388,9 @@ export default function App() {
                 <span className="flex h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-accent-500 animate-glow-red"></span>
                 Tủ Rack Mạng Cao Cấp Nhất Phân Khúc
               </div>
-              <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-[1.75rem] xl:text-4xl 2xl:text-5xl font-extrabold tracking-tight text-white leading-tight sm:leading-tight mb-4 lg:mb-6 uppercase">
-                <span className="block mb-2 xl:mb-4 whitespace-nowrap">TỦ RACK - TỦ SERVER</span>
-                <span className="text-gradient hover:animate-glow-red transition-all duration-300 cursor-default block whitespace-nowrap">THƯƠNG HIỆU MAXTEL</span>
+              <h1 className="text-2xl sm:text-4xl md:text-4xl lg:text-[1.75rem] xl:text-4xl 2xl:text-5xl font-extrabold tracking-tight text-white leading-tight sm:leading-tight mb-4 lg:mb-6 uppercase">
+                <span className="block mb-2 xl:mb-4">TỦ RACK - TỦ SERVER</span>
+                <span className="text-gradient hover:animate-glow-red transition-all duration-300 cursor-default block">THƯƠNG HIỆU MAXTEL</span>
               </h1>
               <p className="text-base sm:text-lg text-white [text-shadow:_0_1px_2px_rgb(0_0_0_/_80%)] mb-6 lg:mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed px-2 lg:px-0">
                 Lựa chọn tủ mạng số 1 của các công trình công nghệ, văn phòng và Data Center. Khung thép SPCC chịu tải siêu trường siêu cường, nước sơn tĩnh điện xướt độc quyền siêu bền vững.
@@ -415,7 +425,7 @@ export default function App() {
                   href="#products"
                   className="w-full sm:w-auto whitespace-nowrap flex items-center justify-center gap-2 px-6 py-4 lg:px-8 lg:py-4 rounded-xl sm:rounded-full font-bold text-base sm:text-lg transition-all bg-brand-600 hover:bg-blue-600 text-white border border-brand-500/50 shadow-[0_0_20px_rgba(37,166,223,0.4)] shadow-brand-500/20"
                 >
-                  Xem Bảng Giá / SP
+                  Xem Sản Phẩm
                 </a>
               </div>
               
@@ -471,6 +481,7 @@ export default function App() {
 
           <div className="flex overflow-x-auto sm:flex-wrap sm:justify-center gap-2 sm:gap-3 mb-8 sm:mb-12 pb-2 sm:pb-0" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             {[
+              { id: 'all', name: 'Tất Cả Sản Phẩm' },
               { id: 'rack', name: 'Tủ Đứng (Floor Standing)' },
               { id: 'wall', name: 'Treo Tường (Wall mount)' },
               { id: 'server', name: 'Tủ Server Center' },
@@ -478,7 +489,10 @@ export default function App() {
             ].map(filter => (
               <button
                 key={filter.id}
-                onClick={() => setActiveFilter(filter.id)}
+                onClick={() => {
+                  setActiveFilter(filter.id);
+                  setCurrentPage(1);
+                }}
                 className={`flex-shrink-0 whitespace-nowrap px-5 py-3 sm:py-2.5 rounded-full text-sm font-semibold transition-all min-h-[44px] ${
                   activeFilter === filter.id 
                     ? 'bg-brand-600 text-white shadow-[0_0_10px_rgba(37,166,223,0.2)] shadow-brand-500/20 scale-105' 
@@ -491,8 +505,8 @@ export default function App() {
           </div>
 
           <motion.div layout className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 pb-8">
-            <AnimatePresence>
-              {filteredProducts.map((prod) => (
+            <AnimatePresence mode="popLayout">
+              {paginatedProducts.map((prod) => (
                 <motion.div 
                   key={prod.id}
                   layout
@@ -524,6 +538,44 @@ export default function App() {
             </AnimatePresence>
           </motion.div>
           
+          {totalPages > 1 && (
+            <div className="flex justify-center items-center gap-2 mt-6 mb-8">
+              <button
+                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+                className="w-10 h-10 flex items-center justify-center rounded-xl border border-brand-500/30 bg-[#0f172a] text-white disabled:opacity-50 hover:bg-brand-600 transition-colors shadow-sm"
+                aria-label="Previous page"
+              >
+                <ChevronRight className="w-5 h-5 rotate-180" />
+              </button>
+              
+              <div className="flex items-center gap-1">
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                  <button
+                    key={page}
+                    onClick={() => setCurrentPage(page)}
+                    className={`w-10 h-10 flex items-center justify-center rounded-xl text-sm font-bold transition-all ${
+                      currentPage === page
+                        ? 'bg-brand-600 text-white shadow-[0_0_10px_rgba(37,166,223,0.3)] shadow-brand-500/20'
+                        : 'border border-brand-500/30 bg-[#0f172a] text-white hover:bg-slate-800'
+                    }`}
+                  >
+                    {page}
+                  </button>
+                ))}
+              </div>
+
+              <button
+                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                disabled={currentPage === totalPages}
+                className="w-10 h-10 flex items-center justify-center rounded-xl border border-brand-500/30 bg-[#0f172a] text-white disabled:opacity-50 hover:bg-brand-600 transition-colors shadow-sm"
+                aria-label="Next page"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
+          )}
+
           <div className="text-center mt-12 sm:mt-16 pt-8 border-t border-brand-500/30">
             <button onClick={scrollToContact} className="w-full sm:w-auto bg-accent-600 hover:bg-accent-500 text-white shadow-[0_0_20px_rgba(195,28,36,0.6)] border border-accent-400/50 font-bold px-8 py-3.5 rounded-xl sm:rounded-full inline-flex items-center justify-center gap-2 text-base transition-colors">
               Xem toàn bộ Catalogue Profile Maxtel <ChevronRight className="w-5 h-5"/>
