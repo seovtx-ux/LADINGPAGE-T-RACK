@@ -90,7 +90,9 @@ export default function App() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setActiveFeature((prev) => (prev + 1) % 3);
+      if (window.innerWidth < 768) {
+        setActiveFeature((prev) => (prev + 1) % 3);
+      }
     }, 4000);
     return () => clearInterval(interval);
   }, []);
@@ -386,17 +388,14 @@ export default function App() {
               
               <div className="block lg:hidden w-full mb-8 relative">
                 <div className="rounded-3xl p-1.5 sm:p-2 bg-gradient-to-tr from-brand-100 to-white shadow-2xl relative">
-                  <div className="absolute top-4 right-4 bg-[#0f172a] px-3 py-1.5 rounded-full font-bold text-accent-600 text-xs shadow-sm z-20 flex items-center gap-1">
-                    <Star className="w-3 h-3 fill-current pt-0.5" /> 4.9/5
-                  </div>
                   <div className="bg-white rounded-2xl overflow-hidden shadow-inner aspect-[4/3] relative flex items-center justify-center border border-brand-500/40">
                     <img 
-                      src="https://maxtel.vn/wp-content/uploads/2026/05/banner-tu-rack.png" 
+                      src="https://maxtel.vn/wp-content/uploads/2026/06/banner-tu-rack.png" 
                       fetchPriority="high" 
                       loading="eager" 
                       alt="Banner Tủ Rack Maxtel" 
                       className="absolute inset-0 w-full h-full object-cover cursor-pointer transition-transform duration-700 hover:scale-105" 
-                      onClick={() => setSelectedImage("https://maxtel.vn/wp-content/uploads/2026/05/banner-tu-rack.png")}
+                      onClick={() => setSelectedImage("https://maxtel.vn/wp-content/uploads/2026/06/banner-tu-rack.png")}
                     />
                     <div className="absolute inset-0 bg-brand-900/40 opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none flex items-center justify-center">
                       <span className="text-white font-medium text-sm border border-white/30 px-3 py-1.5 rounded-full bg-black/50 backdrop-blur-sm">Phóng to</span>
@@ -410,7 +409,7 @@ export default function App() {
                   onClick={scrollToContact}
                   className="w-full sm:w-auto whitespace-nowrap bg-brand-600 hover:bg-blue-600 text-white px-2 py-4 sm:px-6 lg:px-8 lg:py-4 rounded-xl sm:rounded-full font-bold text-base sm:text-lg transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(37,166,223,0.4)] shadow-brand-500/20"
                 >
-                  Nhận Tư Vấn & Báo Giá Tủ Rack <ArrowRight className="w-5 h-5 shrink-0" />
+                  Báo Giá Tủ Rack <ArrowRight className="w-5 h-5 shrink-0" />
                 </button>
                 <a 
                   href="#products"
@@ -443,12 +442,12 @@ export default function App() {
                 {/* Product Image */}
                 <div className="bg-white rounded-2xl overflow-hidden shadow-inner aspect-[4/3] sm:aspect-auto sm:h-[450px] relative flex md:flex-col items-center justify-center border border-brand-500/40">
                   <img 
-                    src="https://maxtel.vn/wp-content/uploads/2026/05/banner-tu-rack.png" 
+                    src="https://maxtel.vn/wp-content/uploads/2026/06/banner-tu-rack.png" 
                     fetchPriority="high" 
                     loading="eager" 
                     alt="Banner Tủ Rack Maxtel" 
                     className="absolute inset-0 w-full h-full object-cover cursor-pointer transition-transform duration-700 hover:scale-105" 
-                    onClick={() => setSelectedImage("https://maxtel.vn/wp-content/uploads/2026/05/banner-tu-rack.png")}
+                    onClick={() => setSelectedImage("https://maxtel.vn/wp-content/uploads/2026/06/banner-tu-rack.png")}
                   />
                   
                   {/* Overlay for zoom hint */}
@@ -933,11 +932,7 @@ export default function App() {
             <div className="absolute top-0 left-0 w-8 sm:w-16 h-full bg-gradient-to-r from-[#050b14] to-transparent z-10 pointer-events-none lg:w-32 lg:from-[#050b14]/80"></div>
             <div className="absolute top-0 right-0 w-8 sm:w-16 h-full bg-gradient-to-l from-[#050b14] to-transparent z-10 pointer-events-none lg:w-32 lg:from-[#050b14]/80"></div>
             
-            <motion.div 
-              className="flex gap-6 sm:gap-8 w-max px-4 sm:px-0"
-              animate={{ x: ["0%", "-50%"] }}
-              transition={{ ease: "linear", duration: 30, repeat: Infinity }}
-            >
+            <div className="flex gap-6 sm:gap-8 w-max px-4 sm:px-0 animate-marquee">
               {[
                 { 
                   name: "Anh Hoàng Quang", 
@@ -995,7 +990,7 @@ export default function App() {
                   </div>
                 </div>
               ))}
-            </motion.div>
+            </div>
           </div>
           
           <div className="mt-20 relative overflow-hidden -mx-4 sm:mx-0 group">
@@ -1003,11 +998,7 @@ export default function App() {
             <div className="absolute top-0 left-0 w-8 sm:w-16 h-full bg-gradient-to-r from-[#050b14] to-transparent z-10 pointer-events-none lg:w-32 lg:from-[#0f172a]/80"></div>
             <div className="absolute top-0 right-0 w-8 sm:w-16 h-full bg-gradient-to-l from-[#050b14] to-transparent z-10 pointer-events-none lg:w-32 lg:from-[#0f172a]/80"></div>
             
-            <motion.div 
-              className="flex gap-4 w-max px-4 sm:px-0"
-              animate={{ x: ["0%", "-50%"] }}
-              transition={{ ease: "linear", duration: 30, repeat: Infinity }}
-            >
+            <div className="flex gap-4 w-max px-4 sm:px-0 animate-marquee">
             {[
               "https://vienthongxanh.cdn.vccloud.vn/wp-content/uploads/2024/08/tu-rack-12u-d600-dang-dung-mau-den-1000x1000.jpg",
               "https://vienthongxanh.cdn.vccloud.vn/wp-content/uploads/2024/08/mat-truoc-Tu-rack-15U-Maxtel-1-1000x1000.jpg",
@@ -1030,7 +1021,7 @@ export default function App() {
                  </div>
                </div>
             ))}
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
