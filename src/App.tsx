@@ -16,6 +16,7 @@ const swipePower = (offset: number, velocity: number) => {
 export default function App() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [showZaloList, setShowZaloList] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeFilter, setActiveFilter] = useState('all');
@@ -1061,11 +1062,11 @@ export default function App() {
             ].map((img, i) => (
                <div 
                  key={i} 
-                 className="flex-shrink-0 w-40 sm:w-56 h-32 sm:h-48 rounded-xl overflow-hidden relative group cursor-pointer border border-brand-500/20 p-2 bg-white"
+                 className="flex-shrink-0 w-40 sm:w-56 h-32 sm:h-48 rounded-xl overflow-hidden relative group/item cursor-pointer border border-brand-500/20 p-2 bg-white"
                  onClick={() => setSelectedImage(img)}
                >
-                 <img src={img} loading="lazy" decoding="async" alt="Hình ảnh tủ mạng chụp tại kho thật" className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-700" />
-                 <div className="absolute inset-0 bg-brand-900/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                 <img src={img} loading="lazy" decoding="async" alt="Hình ảnh tủ mạng chụp tại kho thật" className="w-full h-full object-contain group-hover/item:scale-110 transition-transform duration-700" />
+                 <div className="absolute inset-0 bg-brand-900/60 opacity-0 group-hover/item:opacity-100 transition-opacity flex items-center justify-center">
                    <span className="text-white font-medium text-sm border border-white/30 px-3 py-1 rounded-full bg-black/40 shadow-sm">Xem chi tiết Tủ</span>
                  </div>
                </div>
@@ -1199,19 +1200,58 @@ export default function App() {
       </footer>
 
       {/* Floating Zalo Button */}
-      <a 
-        href="https://zalo.me/0973497685" 
-        target="_blank"
-        rel="noopener noreferrer"
-        className="fixed bottom-24 sm:bottom-8 right-4 sm:right-8 z-[60] w-12 h-12 sm:w-16 sm:h-16 bg-[#0068FF] rounded-full shadow-[0_0_20px_rgba(0,104,255,0.4)] hover:scale-110 hover:shadow-[0_0_25px_rgba(0,104,255,0.6)] transition-all flex items-center justify-center isolate border-2 border-white"
-        aria-label="Liên hệ trực tiếp qua hộp chat Zalo"
+      <div 
+        className="fixed bottom-24 sm:bottom-8 right-4 sm:right-8 z-[60] flex flex-col items-end gap-2"
+        onMouseEnter={() => setShowZaloList(true)}
+        onMouseLeave={() => setShowZaloList(false)}
       >
-        <span className="font-extrabold text-white text-sm sm:text-lg mb-[1px] tracking-tight" style={{ fontFamily: 'sans-serif' }}>Zalo</span>
-        <span className="absolute -top-1 -right-1 flex h-4 w-4 sm:h-5 sm:w-5">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-          <span className="relative inline-flex rounded-full h-4 w-4 sm:h-5 sm:w-5 bg-red-500 border-2 border-white"></span>
-        </span>
-      </a>
+        <AnimatePresence>
+          {showZaloList && (
+            <motion.div 
+              initial={{ opacity: 0, y: 20, scale: 0.8 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 20, scale: 0.8 }}
+              className="bg-white rounded-2xl shadow-2xl border border-brand-500/20 p-2 sm:p-3 mb-2 flex flex-col gap-1.5 sm:gap-2 w-[240px] sm:w-[280px] transform origin-bottom-right"
+            >
+              <div className="px-2 pb-2 text-xs sm:text-sm font-bold text-slate-800 border-b border-slate-200 flex items-center justify-between">
+                <span>Chat Zalo hoặc gọi Hotline<br/><span className="text-brand-600 font-semibold text-[11px] sm:text-xs">Hỗ trợ 24/7</span></span>
+                <button onClick={() => setShowZaloList(false)} className="text-slate-400 hover:text-slate-600 sm:hidden pb-4">
+                  <X className="w-5 h-5"/>
+                </button>
+              </div>
+              <div className="flex flex-col gap-1 max-h-[60vh] overflow-y-auto" style={{ scrollbarWidth: 'none' }}>
+                {[
+                  { name: "Ms. Dung", phone: "0982 960 685", url: "https://zalo.me/0982960685" },
+                  { name: "Ms. Hồng", phone: "096 191 9559", url: "https://zalo.me/0961919559" },
+                  { name: "Mr. Sơn", phone: "0973 497 685", url: "https://zalo.me/0973497685" },
+                  { name: "Mr. Đức Sơn", phone: "096 165 3553", url: "https://zalo.me/0961653553" },
+                  { name: "Ms. Lan", phone: "098 939 5445", url: "https://zalo.me/0989395445" }
+                ].map((contact, idx) => (
+                  <a key={idx} href={contact.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-2 hover:bg-brand-50 rounded-xl transition-colors group">
+                    <div className="w-8 h-8 rounded-lg bg-[#0068FF] flex items-center justify-center text-white text-xs font-bold leading-none shrink-0 group-hover:scale-110 transition-transform shadow-sm">Zalo</div>
+                    <div className="flex flex-col">
+                      <span className="text-sm font-bold text-brand-600 leading-tight">{contact.name}</span>
+                      <span className="text-xs font-semibold text-red-600">{contact.phone}</span>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <button 
+          onClick={() => setShowZaloList(!showZaloList)}
+          className="w-12 h-12 sm:w-16 sm:h-16 bg-[#0068FF] rounded-full shadow-[0_0_20px_rgba(0,104,255,0.4)] hover:scale-110 hover:shadow-[0_0_25px_rgba(0,104,255,0.6)] transition-all flex items-center justify-center isolate border-2 border-white relative animate-bounce hover:animate-none"
+          aria-label="Liên hệ trực tiếp qua hộp chat Zalo"
+        >
+          <span className="font-extrabold text-white text-sm sm:text-lg mb-[1px] tracking-tight" style={{ fontFamily: 'sans-serif' }}>Zalo</span>
+          <span className="absolute -top-1 -right-1 flex h-4 w-4 sm:h-5 sm:w-5">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-4 w-4 sm:h-5 sm:w-5 bg-red-500 border-2 border-white"></span>
+          </span>
+        </button>
+      </div>
 
       {/* Floating CTA for Mobile */}
       <div className="fixed bottom-0 left-0 right-0 p-4 bg-[#0f172a] border-t border-brand-500/40 z-50 sm:hidden flex gap-3 shadow-[0_-10px_20px_rgba(0,0,0,0.5)]">
