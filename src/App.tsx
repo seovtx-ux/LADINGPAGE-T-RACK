@@ -467,7 +467,7 @@ export default function App() {
           <div className="text-center max-w-3xl mx-auto mb-8 md:mb-12">
             <h2 className="text-base text-brand-500 font-semibold tracking-wide uppercase"><span className="animate-pulse">Danh Mục Dòng Tủ Mạng Maxtel</span></h2>
             <p className="inline-block mt-2 text-xl sm:text-2xl md:text-4xl leading-tight font-extrabold tracking-tight text-accent-500 whitespace-nowrap overflow-hidden text-ellipsis max-w-full bg-[#0f172a]/90 backdrop-blur-md px-4 sm:px-6 py-3 rounded-2xl shadow-[0_0_20px_rgba(37,166,223,0.2)] border border-brand-500/30">
-              Đầy đủ kích thước - Chuẩn xác hạ tầng
+              ĐẦY ĐỦ MẪU MÃ
             </p>
             <p className="mt-4 text-lg text-white [text-shadow:_0_1px_2px_rgb(0_0_0_/_80%)]">Sản xuất đầy đủ mẫu mã tủ rack công nghiệp, tủ rack văn phòng, treo tường theo đơn đặt hàng dự án.</p>
           </div>
