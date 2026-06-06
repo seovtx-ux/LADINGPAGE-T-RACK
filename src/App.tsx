@@ -1202,8 +1202,6 @@ export default function App() {
       {/* Floating Zalo Button */}
       <div 
         className="fixed bottom-24 sm:bottom-8 right-4 sm:right-8 z-[60] flex flex-col items-end gap-2"
-        onMouseEnter={() => setShowZaloList(true)}
-        onMouseLeave={() => setShowZaloList(false)}
       >
         <AnimatePresence>
           {showZaloList && (
